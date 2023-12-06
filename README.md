@@ -7,3 +7,4 @@ adicionada a funcionalidade de
 5 - usuarios conseguem pagar contas
 7 - requisição de cheque 
 8 - troca de moeda em tempo real
+10 - Um sistema de suporte ao usu[ario
