@@ -38,7 +38,17 @@ class account():
         else:
             print("You do not have sufficient funds for this transfer.")
 
-
+    def bills(self):
+        code_bill = input("Enter the bar code of your bill: ")
+        value = int(input("Enter the bill value: "))
+        if value > self.balance:
+            print("You are unable to pay this bill")
+        else:
+            self.balance -= value
+            print("The bill was successfully paid")
+            self.history.append(f"You paid the bill {code_bill}, with the value {value}")
+        
+        
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -61,12 +71,12 @@ def access_account(user):
         print("4 - Tranference")
         print("5 - See my current balance")
         print("6 - Request a check book")
-        print("7 - Quit account")
+        print("7 - Pay bills")
+        print("8 - Quit account")
 
         choice = int(input("Select your choice: "))
 
         if choice == 1:
-
             clear_terminal()
             value = int(input("How many is the value of deposit: "))
             user.deposit(value)
@@ -102,13 +112,19 @@ def access_account(user):
         elif choice == 5:
             clear_terminal()
             print(f"Your Current balance is: {user.balance}")
+
         elif choice == 6:
             clear_terminal()
             download_file(url,filename)
-            
+
         elif choice == 7:
             clear_terminal()
+            user.bills()
+
+        elif choice == 8:
+            clear_terminal()
             break
+
         else:
             clear_terminal()
             print("Invalid choice, please select another")
