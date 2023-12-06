@@ -6,3 +6,4 @@ adicionada a funcionalidade de
 3 - histórico de transações
 5 - usuarios conseguem pagar contas
 7 - requisição de cheque 
+8 - troca de moeda em tempo real
