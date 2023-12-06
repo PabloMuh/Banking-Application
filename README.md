@@ -5,6 +5,7 @@ adicionada a funcionalidade de
 2 - transferencia de fundos
 3 - histórico de transações
 5 - usuarios conseguem pagar contas
+6 - notificacoes customizadas para atividades na conta
 7 - requisição de cheque 
 8 - troca de moeda em tempo real
-10 - Um sistema de suporte ao usu[ario
+10 - Um sistema de suporte ao usuario
