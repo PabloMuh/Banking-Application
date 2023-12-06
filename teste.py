@@ -10,6 +10,7 @@ class account():
         self.password = password
         self.balance = 0
         self.history = []
+        self.currency = 1
 
     def deposit(self, value):
         self.balance += value
@@ -48,6 +49,24 @@ class account():
             print("The bill was successfully paid")
             self.history.append(f"You paid the bill {code_bill}, with the value {value}")
         
+
+def convert_currency(amount, base_currency, target_currency):
+    api_key = 'YOUR_EXCHANGE_RATE_API_KEY'
+    endpoint = f'https://open.er-api.com/v6/latest/{base_currency}'
+    
+    params = {'apikey': api_key}
+    response = requests.get(endpoint, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        rate = data['rates'].get(target_currency)
+        if rate is not None:
+            converted_amount = amount * rate
+            return converted_amount
+        else:
+            print(f"Exchange rate not available for {target_currency}.")
+    else:
+        print(f"Failed to fetch exchange rate. Status code: {response.status_code}")
         
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -72,7 +91,8 @@ def access_account(user):
         print("5 - See my current balance")
         print("6 - Request a check book")
         print("7 - Pay bills")
-        print("8 - Quit account")
+        print("8 - Convert my money to another currency")
+        print("9 - Quit account")
 
         choice = int(input("Select your choice: "))
 
@@ -111,7 +131,12 @@ def access_account(user):
 
         elif choice == 5:
             clear_terminal()
-            print(f"Your Current balance is: {user.balance}")
+            if user.currency == 1:
+                print(f"Your Current balance is: {user.balance} reais")
+            elif user.currency == 2:
+                print(f"Your Current balance is: {user.balance} dollars")
+            elif user.currency == 3:
+                print(f"Your Current balance is: {user.balance} euros")
 
         elif choice == 6:
             clear_terminal()
@@ -120,8 +145,36 @@ def access_account(user):
         elif choice == 7:
             clear_terminal()
             user.bills()
-
         elif choice == 8:
+            clear_terminal()
+            print("1 - Real")
+            print("2 - Dollar")
+            print("3 - Euro")
+            select = int(input("Enter your choice:"))
+            if select == 2 and user.currency == 1:
+                user.balance = convert_currency(user.balance, 'BRL', 'USD') 
+                user.currency = 2        
+            elif select == 3 and user.currency == 1:
+                user.balance = convert_currency(user.balance, 'BRL', 'EUR')  
+                user.currency = 3
+            elif select == 1 and user.currency == 2:
+                user.balance = convert_currency(user.balance, 'USD', 'BRL') 
+                user.currency = 1
+            elif select == 1 and user.currency == 3:
+                user.balance = convert_currency(user.balance, 'EUR', 'BRL') 
+                user.currency = 1
+            elif select == 2 and user.currency == 3:
+                user.balance = convert_currency(user.balance, 'EUR', 'USD') 
+                user.currency = 1
+            elif select == 3 and user.currency == 2:
+                user.balance = convert_currency(user.balance, 'USD', 'EUR') 
+                user.currency = 1
+            else:
+                print("You already have this money currency")
+            user.history.append("you convert your money")
+            user.balance = round(user.balance, 2)
+            time.sleep(3)
+        elif choice == 9:
             clear_terminal()
             break
 
