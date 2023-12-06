@@ -1,6 +1,8 @@
 import os
 import time
 
+account_list = []
+
 class account():
     def __init__(self,code,password):
         self.code = code
@@ -27,7 +29,7 @@ class account():
     def transfer(self,destine,value):
         if self.balance >= value:
             self.balance -= value
-            destine.deposit(value)
+            destine.balance += value
             self.history.append(f"You transferred {value} to account {destine.code}")
             print(f"Transfer of {value} to account {destine.code} completed successfully.")
         else:
@@ -43,30 +45,37 @@ def access_account(user):
         print("What operation do you want to do?")
         print("1 - Deposit")
         print("2 - Withdraw")
-        print("3 - See the my history")
+        print("3 - See my history")
         print("4 - Tranference")
         print("5 - See my current balance")
         print("6 - Quit account")
         choice = int(input("Select your choice: "))
         if choice == 1:
             value = int(input("How many is the value of deposit: "))
-            user[1].deposit(value)
+            user.deposit(value)
         elif choice == 2:
             value = int(input("How many is the value of withdraw: "))
-            user[1].withdraw(value)
+            user.withdraw(value)
         elif choice == 3:
-            user[1].show_transactions()
+            clear_terminal()
+            user.show_transactions()
         elif choice == 4:
-            for obj in enumerate(account_list):
-                if code == obj[1].code:
-                    check_transfer = True
-            
             code = input("Enter the account code you want to transfer:")
-            value = int(input("How many is the value of transference: "))
+            check_transfer = False
+            for obj in account_list:
+                if code == obj.code:
+                    check_transfer = True
+                    break  
+            if check_transfer:
+                value = int(input("How much is the value of transfer: "))
+                user.transfer(obj, value)
+            else:
+                print("Account not found, you will be redirected to your home page!!!")
+                time.sleep(3)          
                     
         elif choice == 5:
             clear_terminal()
-            print(f"Your Current balance is: {user[1].balance}")
+            print(f"Your Current balance is: {user.balance}")
         elif choice == 6:
             clear_terminal()
             break
@@ -76,7 +85,7 @@ def access_account(user):
         time.sleep(3)
         clear_terminal()
 
-account_list = []
+
 check = True
 
 while True:
@@ -106,12 +115,12 @@ while True:
         clear_terminal()
         code = input("Type your code account: ")
         password = input("Type your Password: ")
-        for obj in enumerate(account_list):
-            if code == obj[1].code and password == obj[1].password:
+        for obj in account_list:
+            if code == obj.code and password == obj.password:
                 clear_terminal()
                 access_account(obj)
                 check = False
-         
+
         if check:
             print("Account not found, you will be redirected to the home page")
             time.sleep(3)
