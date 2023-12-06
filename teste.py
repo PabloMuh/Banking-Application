@@ -79,6 +79,34 @@ def download_file(url, filename):
         print(f"Now you have Downloaded the cheque book")
     else:
         print(f"Failed to download file. Status code: {response.status_code}")
+def support():
+    choice = int(input("select the number of the opration you have doubt: "))
+    clear_terminal()
+    if choice == 1:
+        print("You chose to make a deposit.")
+
+    elif choice == 2:
+        print("You chose to make a withdrawal.")
+
+    elif choice == 3:
+        print("You chose to see your transaction history.")
+
+    elif choice == 4:
+        print("You chose to make a transfer to another account of this bank.")
+
+    elif choice == 5:
+        print("You chose to see your current balance.")
+
+    elif choice == 6:
+        print("You chose to request a checkbook.")
+
+    elif choice == 7:
+        print("You chose to pay bills.")
+
+    elif choice == 8:
+        print("You chose to convert your money to another currency.")
+    else:
+        print("Invalid choice, please select another")
 
 def access_account(user):
     while True:
@@ -92,7 +120,8 @@ def access_account(user):
         print("6 - Request a check book")
         print("7 - Pay bills")
         print("8 - Convert my money to another currency")
-        print("9 - Quit account")
+        print("9 - Support")
+        print("10 - Quit account")
 
         choice = int(input("Select your choice: "))
 
@@ -175,6 +204,8 @@ def access_account(user):
             user.balance = round(user.balance, 2)
             time.sleep(3)
         elif choice == 9:
+            support()
+        elif choice == 10:
             clear_terminal()
             break
 
