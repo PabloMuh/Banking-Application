@@ -1,6 +1,7 @@
 import os
 import time
 import requests
+import random
 
 account_list = []
 
@@ -177,8 +178,7 @@ def support():
 
 def access_account(user):
     while True:
-        print("Hello User, Welcome to central administration")
-        print("What operation do you want to do?")
+        print("Hello User, Welcome to central administration, What operation do you want to do?")
         print("1 - Deposit")
         print("2 - Withdraw")
         print("3 - See my history")
@@ -188,7 +188,8 @@ def access_account(user):
         print("7 - Pay bills")
         print("8 - Convert my money to another currency")
         print("9 - loan")
-        print("10 - Quit account")
+        print("10 - Investments")
+        print("11 - Quit account")
 
         choice = int(input("Select your choice: "))
 
@@ -262,8 +263,39 @@ def access_account(user):
 
         elif choice == 10:
             clear_terminal()
+            print("What investiment do you want to do?")
+            print("1 - saving")
+            print("2 - direct treasure")
+            print("3 - stock exchange")
+            investiment_choice = int(input("Select the option: "))
+            if investiment_choice == 1:
+                print(f"with this investiment, you will have {round(user.balance * 1.0826,2)} per year, but zero risks")
+                investiment_check = input("want to continue? y/n : ")
+                if investiment_check == "y":
+                    user.balance = user.balance * 1.0826
+            elif investiment_choice == 2:
+                print(f"with this investiment, you will have {round(user.balance * 1.1182,2)} per year, but 2% of risks")
+                investiment_check = input("want to continue? y/n : ")
+                if investiment_check == "y":
+                    probability = random.randint(0,100)
+                    if probability < 98:
+                        user.balance = user.balance * 1.1182                
+                    else:
+                        user.balance = user.balance * 0,8818
+            elif investiment_choice == 3:
+                print(f"with this investiment, you will have one impredictable change, high risks, but highs chance earn much money")
+                investiment_check = input("want to continue? y/n : ")
+                if investiment_check == "y":
+                    probability = random.randint(0,200)
+                    user.balance = user.balance * (probability / 100)    
+                           
+            user.balance = round(user.balance,2)
+            print(f"after one year, your balance now is {user.balance}")
+            time.sleep(3)
+            
+        elif choice == 11:
+            clear_terminal()
             break
-
         else:
             clear_terminal()
             print("Invalid choice, please select another")
