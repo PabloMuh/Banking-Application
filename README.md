@@ -12,4 +12,5 @@ feitas em sala de aula:
 10 - Um sistema de suporte ao usuario  
 feitas fora da sala:  
 4 - sistema de empréstimo  
+9 - função de esquema de investimento
 obs: para a execução correta do código deve-se ter instalado o python 3 e digitar no terminal pip install requests  
