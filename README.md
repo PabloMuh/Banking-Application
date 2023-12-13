@@ -1,7 +1,7 @@
 # Banking-Application
-Primeiro projeto da disciplina projeto de software
-adicionadas as funcionalidades
-feitas em sala de aula:
+Primeiro projeto da disciplina projeto de software  
+adicionadas as funcionalidades  
+feitas em sala de aula:  
 1 - administração de contas
 2 - transferencia de fundos
 3 - histórico de transações
