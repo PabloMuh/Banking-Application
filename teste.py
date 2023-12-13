@@ -14,12 +14,14 @@ class account():
 
     def deposit(self, value):
         self.balance += value
+        self.balance = round(self.balance, 2)
         self.history.append(f"You made a deposit of {value}. Your account balance after this is {self.balance}")
         print(f"you make a deposit of {value} in your account. Your account balance now is {self.balance}")
 
     def withdraw(self,value):
         if self.balance >= value:
             self.balance = self.balance - value
+            self.balance = round(self.balance, 2)
             self.history.append(f"You realize a withdraw of {value}. Your accout balance after this is {self.balance}")
             print(f"you make a withdraw of {value} in your account. Your account balance now is {self.balance}")
         else:
@@ -29,15 +31,14 @@ class account():
         for transactions in self.history:
             print(transactions)
 
-    def transfer(self,destine,value):
-        if self.balance >= value:
-            self.balance -= value
+    def transfer(self,destine,value,original):
+            self.balance -= original
+            self.balance = round(self.balance, 2)
             destine.balance += value
+            destine.balance = round(destine.balance, 2)
             self.history.append(f"You transferred {value} to account {destine.code}")
             destine.history.append(f"You received {value} of the account {self.code}")
             print(f"Transfer of {value} to account {destine.code} completed successfully.")
-        else:
-            print("You do not have sufficient funds for this transfer.")
 
     def bills(self):
         code_bill = input("Enter the bar code of your bill: ")
@@ -46,6 +47,7 @@ class account():
             print("You are unable to pay this bill")
         else:
             self.balance -= value
+            self.balance = round(self.balance, 2)
             print("The bill was successfully paid")
             self.history.append(f"You paid the bill {code_bill}, with the value {value}")
         
@@ -149,9 +151,23 @@ def access_account(user):
                     break  
 
             if check_transfer:
-                value = int(input("How much is the value of transfer: "))
-                user.transfer(obj, value)
-
+                original = int(input("How much is the value of transfer: "))
+                if original <= user.balance:
+                    if user.currency == 1 and obj.currency == 2:
+                        value = convert_currency(user.balance, 'BRL', 'USD')
+                    elif user.currency == 1 and obj.currency == 3:
+                        value = convert_currency(user.balance, 'BRL', 'EUR')
+                    elif user.currency == 2 and obj.currency == 1: 
+                        value = convert_currency(user.balance, 'USD', 'BRL')
+                    elif user.currency == 2 and obj.currency == 3:
+                        value = convert_currency(user.balance, 'USD', 'EUR')
+                    elif user.currency == 3 and obj.currency == 1:
+                        value = convert_currency(user.balance, 'EUR', 'BRL')
+                    elif user.currency == 3 and obj.currency == 2:
+                        value = convert_currency(user.balance, 'EUR', 'USD')
+                    user.transfer(obj, value,original)
+                else:
+                    print("You do not have sufficient funds for this transfer.")          
             else:
                 clear_terminal()
                 print("Account not found, you will be redirected to your home page!!!")
