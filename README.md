@@ -10,6 +10,6 @@ feitas em sala de aula:
 7 - requisição de cheque 
 8 - troca de moeda em tempo real
 10 - Um sistema de suporte ao usuario
-obs: para a execução correta do código deve-se ter instalado o python 3 e digitar no terminal pip install requests
 feitas fora da sala:
 4 - sistema de empréstimo
+obs: para a execução correta do código deve-se ter instalado o python 3 e digitar no terminal pip install requests
