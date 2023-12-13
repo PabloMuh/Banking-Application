@@ -50,7 +50,50 @@ class account():
             self.balance = round(self.balance, 2)
             print("The bill was successfully paid")
             self.history.append(f"You paid the bill {code_bill}, with the value {value}")
+    def loan(self):
+        loan_value = int(input("How much is the value of loan?"))
+        loan_value_after = loan_value * 1.07
+        loan_value = round(loan_value,2)
+        print(f"if you want to take out this loan, the amount to be paid afterwards will be {loan_value_after}")
+        check_loan = input("press y for yes and anything for no: ")
         
+        if check_loan == "y":
+            self.deposit(loan_value)
+        else:
+            clear_terminal()
+            print("The Loan was reffused, you will be redirected to the central") 
+            time.sleep(3)
+            clear_terminal()
+    def convert(self):
+        clear_terminal()
+        print("1 - Real")
+        print("2 - Dollar")
+        print("3 - Euro")
+        select = int(input("Enter your choice:"))
+        if select == 2 and self.currency == 1:
+            self.balance = convert_currency(self.balance, 'BRL', 'USD') 
+            self.currency = 2        
+        elif select == 3 and self.currency == 1:
+            self.balance = convert_currency(self.balance, 'BRL', 'EUR')  
+            self.currency = 3
+        elif select == 1 and self.currency == 2:
+            self.balance = convert_currency(self.balance, 'USD', 'BRL') 
+            self.currency = 1
+        elif select == 1 and self.currency == 3:
+            self.balance = convert_currency(self.balance, 'EUR', 'BRL')     
+            self.currency = 1
+        elif select == 2 and self.currency == 3:
+            self.balance = convert_currency(self.balance, 'EUR', 'USD') 
+            self.currency = 1
+        elif select == 3 and self.currency == 2:
+            self.balance = convert_currency(self.balance, 'USD', 'EUR') 
+            self.currency = 1
+        else:
+            print("You already have this money currency")
+
+        self.history.append("you convert your money")
+        self.balance = round(self.balance, 2)
+        time.sleep(3)
 
 def convert_currency(amount, base_currency, target_currency):
     api_key = 'YOUR_EXCHANGE_RATE_API_KEY'
@@ -82,7 +125,7 @@ def download_file(url, filename):
     else:
         print(f"Failed to download file. Status code: {response.status_code}")
 def support():
-    choice = int(input("select the number of the opration you have doubt: "))
+    choice = int(input("select the number of the operation you have doubt: "))
     clear_terminal()
     if choice == 1:
         print("You chose to make a deposit.")
@@ -107,8 +150,14 @@ def support():
 
     elif choice == 8:
         print("You chose to convert your money to another currency.")
+
+    elif choice == 9:
+        print("you chose to make aloan on the bank.")
+
     else:
         print("Invalid choice, please select another")
+
+    time.sleep(3)
 
 def access_account(user):
     while True:
@@ -122,7 +171,7 @@ def access_account(user):
         print("6 - Request a check book")
         print("7 - Pay bills")
         print("8 - Convert my money to another currency")
-        print("9 - Support")
+        print("9 - loan")
         print("10 - Quit account")
 
         choice = int(input("Select your choice: "))
@@ -191,36 +240,10 @@ def access_account(user):
             clear_terminal()
             user.bills()
         elif choice == 8:
-            clear_terminal()
-            print("1 - Real")
-            print("2 - Dollar")
-            print("3 - Euro")
-            select = int(input("Enter your choice:"))
-            if select == 2 and user.currency == 1:
-                user.balance = convert_currency(user.balance, 'BRL', 'USD') 
-                user.currency = 2        
-            elif select == 3 and user.currency == 1:
-                user.balance = convert_currency(user.balance, 'BRL', 'EUR')  
-                user.currency = 3
-            elif select == 1 and user.currency == 2:
-                user.balance = convert_currency(user.balance, 'USD', 'BRL') 
-                user.currency = 1
-            elif select == 1 and user.currency == 3:
-                user.balance = convert_currency(user.balance, 'EUR', 'BRL') 
-                user.currency = 1
-            elif select == 2 and user.currency == 3:
-                user.balance = convert_currency(user.balance, 'EUR', 'USD') 
-                user.currency = 1
-            elif select == 3 and user.currency == 2:
-                user.balance = convert_currency(user.balance, 'USD', 'EUR') 
-                user.currency = 1
-            else:
-                print("You already have this money currency")
-            user.history.append("you convert your money")
-            user.balance = round(user.balance, 2)
-            time.sleep(3)
+            user.convert()
         elif choice == 9:
-            support()
+            user.loan()
+
         elif choice == 10:
             clear_terminal()
             break
@@ -230,8 +253,6 @@ def access_account(user):
             print("Invalid choice, please select another")
         time.sleep(3)
         clear_terminal()
-
-
 
 
 # Example usage:
@@ -247,7 +268,8 @@ while True:
     print("What do you want to do?")
     print("1 - register an account")
     print("2 - access your account")
-    print("3 - quit the operation")
+    print("3 - support about the operations")
+    print("4 - quit the operation")
 
     choice = int(input("Type your choice: "))
 
@@ -283,12 +305,22 @@ while True:
             clear_terminal()
 
         check = True
-
     elif choice == 3:
+        clear_terminal()
+        print("1 - Deposit")
+        print("2 - Withdraw")
+        print("3 - See my history")
+        print("4 - Tranference")
+        print("5 - See my current balance")
+        print("6 - Request a check book")
+        print("7 - Pay bills")
+        print("8 - Convert my money to another currency")
+        print("9 - loan")
+        support()
+    elif choice == 4:
         clear_terminal()
         print("Thanks for using our services, come back soon!!!")
         break
-
     else:
         clear_terminal()
         print("invalid operation,select another")
