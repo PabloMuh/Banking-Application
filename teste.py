@@ -10,6 +10,8 @@ class account():
         self.password = password
         self.balance = 0
         self.history = []
+        self.bill = []
+        self.value = []
         self.currency = 1
 
     def deposit(self, value):
@@ -41,15 +43,27 @@ class account():
             print(f"Transfer of {value} to account {destine.code} completed successfully.")
 
     def bills(self):
-        code_bill = input("Enter the bar code of your bill: ")
-        value = int(input("Enter the bill value: "))
+        if self.bill:
+            print(self.bill[0])
+            choice = input("Do you want pay the bill? y/n : ")
+            if choice == "y":
+                value = self.value[0]
+                code_bill = input("Enter the surname of bill: ")
+            else:
+                return
+        else:        
+            code_bill = input("Enter the bar code of your bill: ")
+            value = int(input("Enter the bill value: "))
         if value > self.balance:
             print("You are unable to pay this bill")
+            self.bill.append(f"you have a bill of {value} with the bar code {code_bill}")
         else:
             self.balance -= value
             self.balance = round(self.balance, 2)
             print("The bill was successfully paid")
             self.history.append(f"You paid the bill {code_bill}, with the value {value}")
+            self.bill.pop(0)
+            self.value.pop(0)
     def loan(self):
         loan_value = int(input("How much is the value of loan?"))
         loan_value_after = loan_value * 1.07
@@ -59,6 +73,8 @@ class account():
         
         if check_loan == "y":
             self.deposit(loan_value)
+            self.bill.append(f"you have a bill of {loan_value_after} with the bank")
+            self.value.append(loan_value_after)
         else:
             clear_terminal()
             print("The Loan was reffused, you will be redirected to the central") 
