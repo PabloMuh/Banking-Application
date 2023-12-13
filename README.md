@@ -1,6 +1,7 @@
 # Banking-Application
 Primeiro projeto da disciplina projeto de software
-adicionada a funcionalidade de
+adicionadas as funcionalidades
+feitas em sala de aula:
 1 - administração de contas
 2 - transferencia de fundos
 3 - histórico de transações
@@ -10,3 +11,5 @@ adicionada a funcionalidade de
 8 - troca de moeda em tempo real
 10 - Um sistema de suporte ao usuario
 obs: para a execução correta do código deve-se ter instalado o python 3 e digitar no terminal pip install requests
+feitas fora da sala:
+4 - sistema de empréstimo
